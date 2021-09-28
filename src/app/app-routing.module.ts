@@ -20,7 +20,7 @@ const appRoutes: Routes = [
   ]
 
 @NgModule({
-    imports:[RouterModule.forRoot(appRoutes)],
+    imports:[RouterModule.forRoot(appRoutes)], //import the appRoutes
     exports: [RouterModule] // says what is exportable in this module to other modules
 })
 

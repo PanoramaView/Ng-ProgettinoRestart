@@ -1,25 +1,31 @@
-<div class="container">
-    <div class="row">
-        <div class="col-xs-2 align-self-start">
-            <h1>{{ post.title </h1>
-        </div>
-        <div class="col-xs-2 align-self-start">
-            {{ post.author
-        </div>
-        <div class="col-xs-5 align-self-start">
-            {{ post.description
-        </div>
-        <div class="col-xs-1 align self-end">
-            <button type="button" class="btn btn-primary" (click)="onEdit()"> Edit </button>
-            <button type="button" class="btn btn-primary" (click)="onDelete()"> Delete </button>
-        </div>
-    </div>
-</div>
+<!-- single item -->
+<a
+[routerLink]="[index]"
+class="list-group-item list-group-item-action"
+aria-current="page"
+routerLinkActive="active">
 
-<div class="row">
-    <div class="col-xs-12">
-        <ul class="list-group">
+<h5 class="mb-1">{{ post.title }} - <span class="fs-6">{{ post.author }}</span> </h5>
+<small>{{ post.description }}</small>
 
-        </ul>
-    </div>
-</div>
+</a>
+<!-- single item -->
+
+
+<!-- bootstrap list-group with badges
+
+    <ul class="list-group">
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    A list item
+    <span class="badge bg-primary rounded-pill">14</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    A second list item
+    <span class="badge bg-primary rounded-pill">2</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    A third list item
+    <span class="badge bg-primary rounded-pill">1</span>
+  </li>
+</ul> 
+-->

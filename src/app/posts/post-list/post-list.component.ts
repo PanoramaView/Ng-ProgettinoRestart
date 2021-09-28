@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { Post } from '../post.model';
+import { PostService } from '../post.service';
 
 @Component({
   selector: 'app-post-list',
@@ -7,48 +10,24 @@ import { Post } from '../post.model';
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit {
-  posts: Post[] = [
-    new Post(
-      'Titlex',
-      'Authorx',
-      'Testox'
-      ),
-  ];
-  constructor() { }
+  posts: Post[];/* the data are in the post.service, that will be injected */
 
-  ngOnInit(): void {
+    /* inject our Service */
+    constructor(private postService: PostService,
+             private router: Router,
+             private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.postService.postsChanged
+        .subscribe(
+          (posts: Post[]) => {
+            this.posts = posts;
+          }
+        )
+    this.posts = this.postService.getPosts();
   }
 
+  onNewPost(){
+    this.router.navigate(['new'], {relativeTo: this.route})
+  }
 }
-
-// export class PostListComponent implements OnInit {
-//     // @Output() postWasSelected = new EventEmitter<post>(); removed after service injection
-//     posts: Post[]; /* empty cuz now the data are in the post.service, that will be injected */
-
-//     /* inject our Service */
-//     constructor(private postService: PostService,
-//       private router: Router,
-//       private route: ActivatedRoute) { }
-
-//   ngOnInit(): void {
-//   }
-// }
-//   ngOnInit() {
-//     this.PostService.postsChanged
-//         .subscribe(
-//           (posts: Post[]) => {
-//             this.posts = posts;
-//           }
-//         )
-//     this.posts = this.PostService.getposts();
-//   }
-
-//   /* onpostSelected(post: post){
-//     this.postWasSelected.emit(post);
-//     removed after service injection
-//   } */
-
-//   onNewPost(){
-//     this.router.navigate(['new'], {relativeTo: this.route})
-//   }
-// }

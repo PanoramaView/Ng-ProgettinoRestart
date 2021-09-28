@@ -1,20 +1,20 @@
 <!-- printing the list of the posts -->
 <div class="row">
     <div class="col-xs-12">
-      <!-- <button class="btn btn-success" (click)="onNewRecipe()">New Post</button> -->
-      <button class="btn btn-primary">New Post</button>
+      <button class="btn btn-success" (click)="onNewPost()">New Post</button>
     </div>
 </div>
 
     <hr>
-    
+
   <div class="row">
     <div class="col-xs-12">
-      <app-post-show></app-post-show>
-      <!-- <app-post-show
+
+      <app-post-show
         *ngFor="let postEl of posts; let i = index"
         [post]="postEl"
-        [index]="i"></app-post-show> -->
+        [index]="i">
+      </app-post-show>
     </div>
   </div>
   

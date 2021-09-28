@@ -1,2 +1,25 @@
-<!-- adding buttons on the single post -->
-<p>post-detail works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-2 align-self-start">
+            <h1>{{ post.title }}</h1>
+        </div>
+        <div class="col-xs-2 align-self-start">
+            {{ post.author}}
+        </div>
+        <div class="col-xs-5 align-self-start">
+            {{ post.description}}
+        </div>
+        <div class="col-xs-1 align self-end">
+            <button type="button" class="btn btn-primary" (click)="onEdit()"> Edit </button>
+            <button type="button" class="btn btn-primary" (click)="onDelete()"> Delete </button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="list-group">
+
+        </ul>
+    </div>
+</div>
