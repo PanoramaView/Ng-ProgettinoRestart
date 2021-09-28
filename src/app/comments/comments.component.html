@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-xs-10">
+      <app-comment-edit></app-comment-edit>
+      <hr>
+      <ul class="list-group">
+        <a
+          class="list-group-item"
+          style="cursor: pointer"
+          *ngFor="let comment of comments; let i = index" 
+          (click)="onEditItem(i)"
+        >
+          {{ comment.name }} ({{ comment.text }})
+        </a>
+      </ul>
+    </div>
+  </div>
+  

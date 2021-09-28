@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostShowComponent implements OnInit {
 
+  
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onEdit(){
+
+  }
+  onDelete(){
+
+  }
 }
+
