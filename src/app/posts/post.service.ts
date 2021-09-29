@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { Comment } from "../shared/comment.model";
@@ -8,30 +9,36 @@ import { Post } from "./Post.model";
 @Injectable()
 export class PostService {
     postsChanged = new Subject<Post[]>();
-    //PostSelected = new Subject<Post>(); /* Object instantiated with EventEmitter, that will hold Post data */
 
     private posts: Post[] = [
         new Post(
           'Titlex',
           'Authorx',
           'Testox',
-        //   [
-        //     new Comment('Meat', '1'),
-        //     new Comment('French Fries', '20')
-        //   ]
+          [
+            new Comment('Meat', '1'),
+            new Comment('French Fries', '20')
+          ]
           ),
         new Post(
           'Titlex2',
           'Authorx2',
           'Testox2',
-        //   [
-        //     new Comment('Meat', '1'),
-        //     new Comment('French Fries', '20')
-        //   ]
+          [
+            new Comment('Meat', '1'),
+            new Comment('French Fries', '20')
+          ]
           ),
       ];
 
-    constructor(){}
+    constructor(private http: HttpClient){
+    }
+    // overwrite the Post array
+    setPosts(posts: Post[]){
+        this.posts = posts;
+        this.postsChanged.next(this.posts.slice());
+    }
+
     /* The only way to get the posts[] from outside */
     getPosts(){
         return this.posts.slice(); /* will return a copy of the array posts[]*/

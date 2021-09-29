@@ -14,13 +14,13 @@
           <!-- <li routerLinkActive="active" ><a routerLink="/comment-list">Comment List</a></li> -->
         </ul>
         <ul class="nav navbar-nav navbar-right open">
-          <li class="dropdown" appDropdown>
+          <li class="dropdown">
             <!-- <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a> -->
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Manage
               </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item">Option1</a></li>
+              <li><a class="dropdown-item" (click)="onFetchPosts()">Fetch Posts</a></li>
               <li><a class="dropdown-item">Option2</a></li>
               <li><a class="dropdown-item">Option3</a></li>
             </ul>
