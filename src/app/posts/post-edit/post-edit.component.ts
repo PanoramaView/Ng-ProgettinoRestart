@@ -60,6 +60,9 @@ export class PostEditComponent implements OnInit {
   onDeleteComment(index: number) {
     (<FormArray>this.postForm.get('comments')).removeAt(index);
   }
+  onCancel(){
+    this.router.navigate(['/posts']);
+  }
 
   // to initialize our Form
   private initForm() {

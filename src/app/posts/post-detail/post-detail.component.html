@@ -9,7 +9,7 @@
         <div class="col-xs-5 align-self-start">
             {{ post.description}}
         </div>
-        <div class="col-xs-1 align self-end">
+        <div class="col-xs-1 align-self-end">
             <button type="button" class="btn btn-primary" (click)="onEdit()"> Edit </button>
             <button type="button" class="btn btn-primary" (click)="onDelete()"> Delete </button>
         </div>
@@ -19,7 +19,11 @@
 <div class="row">
     <div class="col-xs-12">
         <ul class="list-group">
-
+            <li
+        class="list-group-item"
+        *ngFor="let comment of post.comments">
+        {{ comment.name }} - {{ comment.text }}
+      </li>
         </ul>
     </div>
 </div>

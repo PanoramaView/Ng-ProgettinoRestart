@@ -16,8 +16,8 @@ export class PostService {
           'Authorx',
           'Testox',
           [
-            new Comment('Meat', '1'),
-            new Comment('French Fries', '20')
+            new Comment('Capra Di Montagna', 'ok'),
+            new Comment('Aldo', 'Buongiorno Marco')
           ]
           ),
         new Post(
@@ -25,15 +25,15 @@ export class PostService {
           'Authorx2',
           'Testox2',
           [
-            new Comment('Meat', '1'),
-            new Comment('French Fries', '20')
+            new Comment('xx', 'lol'),
+            new Comment('x', 'ciao')
           ]
           ),
       ];
 
     constructor(private http: HttpClient){
     }
-    // overwrite the Post array
+    // overwrite the Post array API
     setPosts(posts: Post[]){
         this.posts = posts;
         this.postsChanged.next(this.posts.slice());
@@ -57,5 +57,9 @@ export class PostService {
         this.posts[index] = newPost;
         this.postsChanged.next(this.posts.slice());
 
+    }
+    deletePost(index: number){
+      this.posts.splice(index, 1);
+      this.postsChanged.next(this.posts.slice());
     }
 }
