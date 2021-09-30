@@ -23,31 +23,17 @@ export class DataStorageService {
         console.log(response);
       });
   }
-
   fetchPosts() {
-    return this.http.get<any>('https://spindox-blog.herokuapp.com/api/posts')
-      .subscribe({
-        next: data => {
-          this.totalAngularPackages = data.total;
-        console.log('Fetched Data' + this.totalAngularPackages);
-        // this.postService.setPosts(posts);
-      },
-      error: error => {
-        this.errorMessage = error.message;
-        console.error('There was an error!' + error);
-      }
-      });
-  }
-
-  fetchPosts1() {
-    return this.http.get<Post[]>('https://spindox-blog.herokuapp.com/api/posts')
+    return this.http.get<{data: Post[]}>('https://spindox-blog.herokuapp.com/api/posts')
     // this.http
     //   .get<Post[]>(
     //     'https://spindox-blog.herokuapp.com/api/posts.json'
     //   )
       .subscribe(posts => {
-        console.log('Fetched Data' + posts);
-        // this.postService.setPosts(posts);
+        console.log("Fetched Data: ")
+        console.log(posts);
+        this.postService.setPosts(posts.data);
+        console.log(posts.data[1]);
       });
   }
 }

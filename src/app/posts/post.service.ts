@@ -36,7 +36,7 @@ export class PostService {
     // overwrite the Post array API
     setPosts(posts: Post[]){
         this.posts = posts;
-        this.postsChanged.next(this.posts.slice());
+        this.postsChanged.next([...this.posts]);
     }
 
     /* The only way to get the posts[] from outside */
