@@ -1,6 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DataStorageService } from 'src/app/shared/data-storage.service';
+
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PostService } from '../post.service';
 
@@ -17,6 +19,7 @@ export class PostEditComponent implements OnInit {
   constructor(private route: ActivatedRoute, 
     private postService: PostService,
     private router: Router,
+    private dataStorageService: DataStorageService,
     private location: Location) { }
 
   ngOnInit() {
@@ -39,7 +42,7 @@ export class PostEditComponent implements OnInit {
       //this.postService.addPost(newPost);
       //uguale a 
       this.postService.addPost(this.postForm.value);
-      
+      //this.dataStorageService.storePosts();
     }
   }
   back(): void {
@@ -76,7 +79,7 @@ export class PostEditComponent implements OnInit {
       const post = this.postService.getPost(this.id);
       postTitle = post.title;
       postAuthor = post.author;
-      postDescription = post.description;
+      postDescription = post.body;
 
       // comments
       if(post['comments']) {

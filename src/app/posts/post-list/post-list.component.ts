@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { Post } from '../post.model';
 import { PostService } from '../post.service';
@@ -9,7 +10,8 @@ import { PostService } from '../post.service';
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css']
 })
-export class PostListComponent implements OnInit {
+export class PostListComponent implements OnInit, OnDestroy {
+  postsChangedSubscription: Subscription;
   posts: Post[];/* the data are in the post.service, that will be injected */
 
     /* inject our Service */
@@ -18,13 +20,18 @@ export class PostListComponent implements OnInit {
              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.postService.postsChanged
+    this.postsChangedSubscription = this.postService.postsChanged
         .subscribe(
           (posts: Post[]) => {
             this.posts = posts;
           }
         )
+        
     this.posts = this.postService.getPosts();
+  }
+
+  ngOnDestroy(){
+    this.postsChangedSubscription.unsubscribe();
   }
 
   onNewPost(){

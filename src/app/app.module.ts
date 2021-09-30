@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { PostEditComponent } from './posts/post-edit/post-edit.component';
 import { PostService } from './posts/post.service';
+import { DataStorageService } from './shared/data-storage.service';
 
 @NgModule({
   declarations: [
@@ -33,11 +34,11 @@ import { PostService } from './posts/post.service';
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule,
   ],
-  providers: [PostService],
+  providers: [PostService, DataStorageService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
