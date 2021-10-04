@@ -56,8 +56,8 @@ an Observable that allows
         return this.posts.slice(); /* will return a copy of the array posts[]*/
     }
 
-    getPost(id: number){
-        return this.posts[id];
+    getPost(id: string){
+        return this.posts.find((post) => post._id === id);
     }
 
     addPost(Post: Post) {
@@ -65,12 +65,15 @@ an Observable that allows
         this.postsChanged.next(this.posts.slice()); //updates the real posts[]
     }
 
-    updatePost(index: number, newPost: Post) {
-        this.posts[index] = newPost;
+    updatePost(id: string, newPost: Post) {
+        // with the new index
+        const index = this.posts.findIndex((post) => post._id === id); // return index of the array ;
+        this.posts[index] = newPost; 
         this.postsChanged.next(this.posts.slice());
 
     }
-    deletePost(index: number){
+    deletePost(id: string){
+        const index = this.posts.findIndex((post) => post._id === id); // return index of the array ;
       this.posts.splice(index, 1);
       this.postsChanged.next(this.posts.slice());
     }

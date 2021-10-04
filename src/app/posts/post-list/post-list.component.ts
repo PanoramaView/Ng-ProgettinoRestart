@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DataStorageService } from 'src/app/shared/data-storage.service';
 
 import { Post } from '../post.model';
 import { PostService } from '../post.service';
@@ -17,9 +18,11 @@ export class PostListComponent implements OnInit, OnDestroy {
     /* inject our Service */
     constructor(private postService: PostService,
              private router: Router,
-             private route: ActivatedRoute) { }
+             private route: ActivatedRoute,
+             private dataStorageService: DataStorageService) { }
 
   ngOnInit() {
+    this.dataStorageService.fetchPosts();
     this.postsChangedSubscription = this.postService.postsChanged
         .subscribe(
           (posts: Post[]) => {

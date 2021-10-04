@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Post } from '../Post.model';
 import { PostService } from '../post.service';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.css']
 })
-export class PostDetailComponent implements OnInit {
+export class PostDetailComponent implements OnInit, OnDestroy {
   post: Post;
-  id: number;
+  // posts: Post[];
+  id: string;
+  postsChangedSubscription: Subscription;
+  routeSub: Subscription;
 
   constructor(private postService: PostService,
     private route: ActivatedRoute,// fetch route id
@@ -19,27 +23,36 @@ export class PostDetailComponent implements OnInit {
     private dataStorageService: DataStorageService) { }
 
   ngOnInit() {
-    this.route.params.subscribe( //with subscribe, it is responsive to changes
+    this.routeSub = this.route.params.subscribe( //with subscribe, it is responsive to changes
       (params: Params) => {
-        this.id = +params['id'];
+        this.id = params['id'];
         this.post = this.postService.getPost(this.id);
 
         //riguardare qui
         // se post é vuoto
         if (!this.post) {
+          // this.dataStorageService.fetchPostDetail(this.id);
           //chiamata API
           this.dataStorageService.fetchPosts();
-
-          // this.postsChangedSubscription = this.postService.postsChanged
-          //   .subscribe(
-          //     (posts: Post[]) => {
-          //       this.post = posts;
-          //     }
-          //     )
-             }
+          this.postsChangedSubscription = this.postService.postsChanged
+            .subscribe(
+              (posts: Post[]) => {
+                this.post = this.postService.getPost(this.id);
+              }
+            )
+        }
         //riguardare qui
         //add here <- chiamata API per runnarlo @load
       })
+  }
+
+  ngOnDestroy(){
+
+    this.routeSub.unsubscribe();
+
+    if(this.postsChangedSubscription){
+      this.postsChangedSubscription.unsubscribe();
+    }
   }
 
   onEdit() {
@@ -47,8 +60,11 @@ export class PostDetailComponent implements OnInit {
   }
 
   onDelete() {
-    this.postService.deletePost(this.id);
-    this.router.navigate(['/posts']);
+    // this.postService.deletePost(this.id);
+    // this.router.navigate(['/posts']);
+    // this.dataStorageService.deletePosts(this.id).subscribe(()=>{
+    //   this.postService.postsChanged = [];
+    // })
   }
 
 }

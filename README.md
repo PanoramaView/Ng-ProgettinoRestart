@@ -22,12 +22,13 @@ Titolo, testo, autore
 
 API
 
-GET https://spindox-blog.herokuapp.com/api/posts 
+GET https://spindox-blog.herokuapp.com/api/posts
 
-GET https://spindox-blog.herokuapp.com/api/posts/:id
+GET https://spindox-blog.herokuapp.com/api/posts/:id //in post-detail
 
-POST https://spindox-blog.herokuapp.com/api/posts 
+POST https://spindox-blog.herokuapp.com/api/posts
 
 PUT https://spindox-blog.herokuapp.com/api/posts/:id
 
 DELETE https://spindox-blog.herokuapp.com/api/posts/:id
+

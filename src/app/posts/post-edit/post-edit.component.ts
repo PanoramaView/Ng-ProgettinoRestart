@@ -12,7 +12,7 @@ import { PostService } from '../post.service';
   styleUrls: ['./post-edit.component.css']
 })
 export class PostEditComponent implements OnInit {
-  id: number;
+  id: string;
   editMode = false;
   postForm: FormGroup; //form is a propriety;
 
@@ -25,7 +25,7 @@ export class PostEditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
-        this.id = +params['id'];
+        this.id = params['id'];
         this.editMode = params['id'] != null;
         this.initForm(); // create form
       }
@@ -35,12 +35,14 @@ export class PostEditComponent implements OnInit {
     if (this.editMode) {
       //this.postService.updatePost(this.id, newPost);
       //uguale a
+      // add Posts to BE call put API
       this.postService.updatePost(this.id, this.postForm.value);
       //this.router.navigate(['../']); //torna indietro prima dell'id
       this.back(); // torna indietro all'id
     } else {
       //this.postService.addPost(newPost);
       //uguale a 
+      // add Posts to BE call put API
       this.postService.addPost(this.postForm.value);
       //this.dataStorageService.storePosts();
     }

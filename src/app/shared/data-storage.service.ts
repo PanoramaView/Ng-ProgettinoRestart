@@ -25,20 +25,7 @@ export class DataStorageService {
         console.log(response);
       });
   }
-  fetchPosts1() {
-    return this.http.get<{ data: Post[] }>('https://spindox-blog.herokuapp.com/api/posts')
-      // how do I add the default value???
-      // .pipe(map(posts => {
-      //   return posts.map(post => {
-      //     return { ...posts, }
-      //   })
-      // }))
-      // .subscribe(resp => {
-      //   console.log("Fetched Data: ")
-      //   console.log(resp.data);
-      //   this.postService.setPosts(resp.data);
-      // });
-  }
+
   fetchPosts() {
     this.http.get<{ data: Post[] }>('https://spindox-blog.herokuapp.com/api/posts')
       // how do I add the default value???
@@ -52,5 +39,17 @@ export class DataStorageService {
         console.log(resp.data);
         this.postService.setPosts(resp.data);
       });
+  }
+
+  fetchPostDetail(id: string) {
+    this.http.get<{ data: Post }>('https://spindox-blog.herokuapp.com/api/posts/' + id)
+      .subscribe(resp => {
+        console.log(resp);
+      })
+  }
+
+  deletePosts(id: string) {
+    return this.http
+      .delete<{ data: Post }>('https://spindox-blog.herokuapp.com/api/posts/' + id)
   }
 }

@@ -1,13 +1,13 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-2 align-self-start">
-            <h1>{{ post.title }}</h1>
+            <h1>{{ post ? post.title : ''}}</h1>
         </div>
         <div class="col-xs-2 align-self-start">
-            {{ post.author}}
+            {{ post ? post.author : ''}}
         </div>
         <div class="col-xs-5 align-self-start">
-            {{ post.body}}
+            {{ post ? post.body : ''}}
         </div>
         <div class="col-xs-1 align-self-end">
             <button type="button" class="btn btn-primary" (click)="onEdit()"> Edit </button>
@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<div class="row">
+<div *ngIf="post" class="row">
     <div class="col-xs-12">
         <ul class="list-group">
             <li class="list-group-item" *ngFor="let comment of post.comments">
