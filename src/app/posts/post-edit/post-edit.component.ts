@@ -5,7 +5,6 @@ import { DataStorageService } from 'src/app/shared/data-storage.service';
 
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PostService } from '../post.service';
-import { Tag } from 'src/app/shared/tag.model';
 
 @Component({
   selector: 'app-post-edit',
@@ -16,12 +15,7 @@ export class PostEditComponent implements OnInit {
   id: string;
   editMode = false;
   postForm: FormGroup; //form is a propriety;
-  private tags: Tag[] = [
-    new Tag('tag1', false),
-    new Tag('tag2', false),
-    new Tag('tag3', false)
-  ];
-  // tags: Array<string> = ['tag1', 'tag2', 'tag3'];
+  tags: Array<string> = ['tag1', 'tag2', 'tag3'];
 
   constructor(private route: ActivatedRoute,
     private postService: PostService,
@@ -40,20 +34,26 @@ export class PostEditComponent implements OnInit {
   }
 
   onSubmit() {
+    //edit post
     if (this.editMode) {
       //this.postService.updatePost(this.id, newPost);
       //uguale a
       // add Posts to BE call put API
       this.postService.updatePost(this.id, this.postForm.value);
       //this.router.navigate(['../']); //torna indietro prima dell'id
+      this.dataStorageService.editPost(this.id, this.postForm.value);
       this.back(); // torna indietro all'id
-    } else {
+    } 
+    else 
+    //creazione new post
+    {
       //this.postService.addPost(newPost);
       //uguale a 
       // add Posts to BE call put API
       this.postService.addPost(this.postForm.value); //only in UI
       console.log(this.postForm.value);
       this.dataStorageService.storePosts(this.postForm.value);
+      this.back();
     }
   }
   back(): void {
@@ -69,7 +69,7 @@ export class PostEditComponent implements OnInit {
   onAddComment() {
     (<FormArray>this.postForm.get('comments')).push(
       new FormGroup({
-        'name': new FormControl(null, Validators.required),
+        'author': new FormControl(null, Validators.required),
         'text': new FormControl(null, [
           Validators.required
         ])
@@ -105,9 +105,9 @@ export class PostEditComponent implements OnInit {
         for (let comment of post.comments) {
           postComments.push(
             new FormGroup({
-              'name': new FormControl(comment.author, Validators.required),
+              'author': new FormControl(comment.author, Validators.required),
               'text': new FormControl(comment.text, [
-                Validators.required,
+                Validators.required,  
               ])
             })
           );
@@ -115,16 +115,15 @@ export class PostEditComponent implements OnInit {
       }
 
       //tags
-      if (post['tags']) {
-        for (let tag of post.tags) {
-          postTags.push(
-            new FormGroup({
-              'name': new FormControl(tag.name),
-              'value': new FormControl(tag.value)
-            })
-          );
-        }
-      }
+      // if (post['tags']) {
+      //   for (let tag of post.tags) {
+      //     postTags.push(
+      //       new FormGroup({
+      //         'name': new FormControl(tag.name)
+      //       })
+      //     );
+      //   }
+      // }
 
     }
     this.postForm = new FormGroup({

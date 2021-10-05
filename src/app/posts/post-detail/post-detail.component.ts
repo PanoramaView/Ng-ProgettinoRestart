@@ -4,6 +4,7 @@ import { Post } from '../Post.model';
 import { PostService } from '../post.service';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
 import { Subscription } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-post-detail',
@@ -16,6 +17,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   id: string;
   postsChangedSubscription: Subscription;
   routeSub: Subscription;
+  commentForm = FormGroup;
 
   constructor(private postService: PostService,
     private route: ActivatedRoute,// fetch route id
@@ -63,6 +65,15 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     this.postService.deletePost(this.id);
     this.dataStorageService.deletePosts(this.id);
     this.router.navigate(['/posts']);
+  }
+
+
+
+  onSubmit() {
+  }
+
+  DeleteComment(index: number) {
+    
   }
 
 }

@@ -34,7 +34,5 @@ DELETE https://spindox-blog.herokuapp.com/api/posts/:id
 
 
 
-- in editMode @refresh, no data
-- edit post
-- tags 
+- tags next
 - comments format

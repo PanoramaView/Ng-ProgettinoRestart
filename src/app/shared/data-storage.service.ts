@@ -30,8 +30,9 @@ export class DataStorageService {
         post)
       .subscribe(resp => {
         console.log(resp);
-        
       });
+
+      this.fetchPosts();
   }
 
   fetchPosts() {
