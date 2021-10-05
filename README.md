@@ -32,3 +32,9 @@ PUT https://spindox-blog.herokuapp.com/api/posts/:id
 
 DELETE https://spindox-blog.herokuapp.com/api/posts/:id
 
+
+
+- in editMode @refresh, no data
+- edit post
+- tags 
+- comments format

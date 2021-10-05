@@ -60,11 +60,9 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    // this.postService.deletePost(this.id);
-    // this.router.navigate(['/posts']);
-    // this.dataStorageService.deletePosts(this.id).subscribe(()=>{
-    //   this.postService.postsChanged = [];
-    // })
+    this.postService.deletePost(this.id);
+    this.dataStorageService.deletePosts(this.id);
+    this.router.navigate(['/posts']);
   }
 
 }

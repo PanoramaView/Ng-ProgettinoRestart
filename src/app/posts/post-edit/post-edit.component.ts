@@ -1,10 +1,11 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
 
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PostService } from '../post.service';
+import { Tag } from 'src/app/shared/tag.model';
 
 @Component({
   selector: 'app-post-edit',
@@ -15,8 +16,14 @@ export class PostEditComponent implements OnInit {
   id: string;
   editMode = false;
   postForm: FormGroup; //form is a propriety;
+  private tags: Tag[] = [
+    new Tag('tag1', false),
+    new Tag('tag2', false),
+    new Tag('tag3', false)
+  ];
+  // tags: Array<string> = ['tag1', 'tag2', 'tag3'];
 
-  constructor(private route: ActivatedRoute, 
+  constructor(private route: ActivatedRoute,
     private postService: PostService,
     private router: Router,
     private dataStorageService: DataStorageService,
@@ -31,6 +38,7 @@ export class PostEditComponent implements OnInit {
       }
     )
   }
+
   onSubmit() {
     if (this.editMode) {
       //this.postService.updatePost(this.id, newPost);
@@ -43,14 +51,20 @@ export class PostEditComponent implements OnInit {
       //this.postService.addPost(newPost);
       //uguale a 
       // add Posts to BE call put API
-      this.postService.addPost(this.postForm.value);
-      //this.dataStorageService.storePosts();
+      this.postService.addPost(this.postForm.value); //only in UI
+      console.log(this.postForm.value);
+      this.dataStorageService.storePosts(this.postForm.value);
     }
   }
   back(): void {
     this.location.back()
   }
 
+  getSelectedTags() {
+  }
+
+  addTags() {
+  }
 
   onAddComment() {
     (<FormArray>this.postForm.get('comments')).push(
@@ -65,7 +79,7 @@ export class PostEditComponent implements OnInit {
   onDeleteComment(index: number) {
     (<FormArray>this.postForm.get('comments')).removeAt(index);
   }
-  onCancel(){
+  onCancel() {
     this.router.navigate(['/posts']);
   }
 
@@ -76,6 +90,9 @@ export class PostEditComponent implements OnInit {
     let postDescription = '';
     //comments
     let postComments = new FormArray([]);
+    let postTags = new FormArray([
+        new FormControl('') //wildcard
+    ]);
 
     if (this.editMode) { // if editMode, load the post data into the input boxes
       const post = this.postService.getPost(this.id);
@@ -84,27 +101,45 @@ export class PostEditComponent implements OnInit {
       postDescription = post.body;
 
       // comments
-      if(post['comments']) {
-        for(let comment of post.comments) {
+      if (post['comments']) {
+        for (let comment of post.comments) {
           postComments.push(
             new FormGroup({
-            'name': new FormControl(comment.name, Validators.required),
-            'text': new FormControl(comment.text, [
-              Validators.required,
-            ])
-          })
+              'name': new FormControl(comment.author, Validators.required),
+              'text': new FormControl(comment.text, [
+                Validators.required,
+              ])
+            })
           );
         }
       }
+
+      //tags
+      if (post['tags']) {
+        for (let tag of post.tags) {
+          postTags.push(
+            new FormGroup({
+              'name': new FormControl(tag.name),
+              'value': new FormControl(tag.value)
+            })
+          );
+        }
+      }
+
     }
     this.postForm = new FormGroup({
       'title': new FormControl(postTitle, Validators.required), // if we are editing it will load the postTitle, if not it will load the default empty string value
       'author': new FormControl(postAuthor, Validators.required),
-      'description': new FormControl(postDescription, Validators.required),
+      'body': new FormControl(postDescription, Validators.required),
       'comments': postComments,
+      'tags': postTags
     });
   }
-  get controls() { // a getter!
+  get commentsArray() { // a getter!
     return (<FormArray>this.postForm.get('comments')).controls;
+  }
+
+  get tagsArray() {
+    return (<FormArray>this.postForm.get('tags')).controls;
   }
 }

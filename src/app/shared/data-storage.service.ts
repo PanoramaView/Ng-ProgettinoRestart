@@ -12,17 +12,25 @@ export class DataStorageService {
 
   constructor(private http: HttpClient, private postService: PostService) { }
 
-  storePosts() {
-    const posts = this.postService.getPosts();
-    console.table(posts);
+  storePosts(post: Post) {
     this.http
-      .put(
+      .post(
         'https://spindox-blog.herokuapp.com/api/posts',
-        //{ data: posts }
-        posts
+        post
       )
-      .subscribe(response => {
-        console.log(response);
+      .subscribe(resp => {
+        console.log(resp);
+      });
+  }
+
+  editPost(id: string, post: Post) {
+    this.http
+      .put<{ data: Post[] }>(
+        'https://spindox-blog.herokuapp.com/api/posts/' + id, 
+        post)
+      .subscribe(resp => {
+        console.log(resp);
+        
       });
   }
 
@@ -49,7 +57,9 @@ export class DataStorageService {
   }
 
   deletePosts(id: string) {
-    return this.http
-      .delete<{ data: Post }>('https://spindox-blog.herokuapp.com/api/posts/' + id)
+    this.http
+      .delete<{ data: Post }>('https://spindox-blog.herokuapp.com/api/posts/' + id).subscribe(resp =>{
+        console.log(resp);
+      })
   }
 }

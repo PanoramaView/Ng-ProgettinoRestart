@@ -1,7 +1,8 @@
 import { Comment } from "../shared/comment.model";
+import { Tag } from "../shared/tag.model";
 
 export class Post {
-  public tags: Array<string>;
+  public tags: Tag[];
   public _id: string;
   public title: string;
   public body: string;
@@ -11,7 +12,7 @@ export class Post {
   public updatedAt: any;
 
 constructor( 
-  tags: Array<string>, 
+  tags: Tag[], 
 _id: string,
 title: string, 
 body: string, 

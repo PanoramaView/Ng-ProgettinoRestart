@@ -1,5 +1,5 @@
 export class Comment {
-    constructor(public name: string, public text: string) {
+    constructor(public author: string, public text: string) {
 
     }
 }

@@ -10,10 +10,9 @@ export class HeaderComponent {
 
   }
   onSavePosts(){
-    this.dataStorageService.storePosts();
+    //this.dataStorageService.storePosts();
   }
   
   onFetchPosts(){
-    this.dataStorageService.fetchPosts();
   }
 }

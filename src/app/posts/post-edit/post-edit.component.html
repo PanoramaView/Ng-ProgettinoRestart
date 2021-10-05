@@ -1,6 +1,8 @@
 <div class="row">
     <div class="col-xs-12">
-        <form class="container" [formGroup]="postForm" (ngSubmit)="onSubmit()">
+        <form class="container" 
+        [formGroup]="postForm" 
+        (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-xs-12">
                     <button type="submit" class="btn btn-success" [disabled]="!postForm.valid"> Save</button>
@@ -28,18 +30,36 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea type="text" id="description" formControlName="description" class="form-control"
+                        <label for="body">Description</label>
+                        <textarea type="text" id="body" formControlName="body" class="form-control"
                             rows="6"></textarea>
                     </div>
                 </div>
             </div>
+            
+            <!-- <div class="row">
+                <div class="col-xd-12" formArrayName="tags">
+                    <div 
+                    class="form-check form-check-inline"
+                    *ngFor="let tag of tagsArray; let i = index"
+                    [fromGroupName]="i"
+                    style="margin-top: 10px;">
+                    <input class="form-check-input" 
+                    type="checkbox" 
+                    id="tag" 
+                    fromControlName="name"
+                    [ngModel]="value">
+                    <label class="form-check-label" for="tag" [ngModel]="tag[i].name"> 
+                    </label>
+                    </div>
+                </div>
+            </div> -->
 
             <div class="row">
             <div class="col-xs-12" formArrayName="comments">
                 <div 
                 class="row" 
-                *ngFor="let commentCtrl of controls; let i = index"
+                *ngFor="let commentCtrl of commentsArray; let i = index"
                 [formGroupName]="i"
                 style="margin-top: 10px;">
                     <div class="col-xs-8">
