@@ -4,7 +4,8 @@ import { Post } from '../Post.model';
 import { PostService } from '../post.service';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
 import { Subscription } from 'rxjs';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Comment } from 'src/app/shared/tags.model';
 
 @Component({
   selector: 'app-post-detail',
@@ -13,11 +14,12 @@ import { FormGroup } from '@angular/forms';
 })
 export class PostDetailComponent implements OnInit, OnDestroy {
   post: Post;
+  comment: Comment;
   // posts: Post[];
   id: string;
   postsChangedSubscription: Subscription;
   routeSub: Subscription;
-  commentForm = FormGroup;
+  commentForm: FormGroup;
 
   constructor(private postService: PostService,
     private route: ActivatedRoute,// fetch route id
@@ -43,9 +45,8 @@ export class PostDetailComponent implements OnInit, OnDestroy {
               }
             )
         }
-        //riguardare qui
-        //add here <- chiamata API per runnarlo @load
       })
+      this.initForm();
   }
 
   ngOnDestroy(){
@@ -67,9 +68,26 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['/posts']);
   }
 
+  private initForm() {
+    let commentAuthor = '';
+    let commentText = '';
+    this.commentForm = new FormGroup({
+      'author': new FormControl(commentAuthor, Validators.required), // if we are editing it will load the postTitle, if not it will load the default empty string value
+      'text': new FormControl(commentText, Validators.required),
+    });
+  }
 
+  handleKeyUp(e){
+    if(e.keyCode === 13){
+       this.onSubmit();
+    }
+ }
 
-  onSubmit() {
+  onSubmit(){
+    this.post.comments.push(this.commentForm.value);
+
+    this.dataStorageService.editPost(this.id, this.post);
+    this.commentForm.reset();
   }
 
   DeleteComment(index: number) {

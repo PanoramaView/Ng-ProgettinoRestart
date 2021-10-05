@@ -35,6 +35,18 @@ export class DataStorageService {
       this.fetchPosts();
   }
 
+  // storeComment(id: string, post: Post) {
+  //   this.http
+  //     .put<any>(
+  //       'https://spindox-blog.herokuapp.com/api/posts/' + id, 
+  //       post)
+  //     .subscribe(resp => {
+  //       console.log(resp);
+  //     });
+
+  //     this.fetchPosts();
+  // }
+
   fetchPosts() {
     this.http.get<{ data: Post[] }>('https://spindox-blog.herokuapp.com/api/posts')
       // how do I add the default value???
