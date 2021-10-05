@@ -51,6 +51,7 @@ export class PostEditComponent implements OnInit {
       //uguale a 
       // add Posts to BE call put API
       this.postService.addPost(this.postForm.value); //only in UI
+      console.log("this.postForm.value");
       console.log(this.postForm.value);
       this.dataStorageService.storePosts(this.postForm.value);
       this.back();
@@ -70,9 +71,7 @@ export class PostEditComponent implements OnInit {
     (<FormArray>this.postForm.get('comments')).push(
       new FormGroup({
         'author': new FormControl(null, Validators.required),
-        'text': new FormControl(null, [
-          Validators.required
-        ])
+        'text': new FormControl(null, Validators.required)
       })
     );
   }

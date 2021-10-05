@@ -35,4 +35,3 @@ DELETE https://spindox-blog.herokuapp.com/api/posts/:id
 
 
 - tags next
-- comments format

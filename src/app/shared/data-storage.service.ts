@@ -14,7 +14,7 @@ export class DataStorageService {
 
   storePosts(post: Post) {
     this.http
-      .post(
+      .post<{ data: Post[]}>(
         'https://spindox-blog.herokuapp.com/api/posts',
         post
       )
@@ -30,9 +30,9 @@ export class DataStorageService {
         post)
       .subscribe(resp => {
         console.log(resp);
+        this.fetchPosts();
       });
 
-      this.fetchPosts();
   }
 
   // storeComment(id: string, post: Post) {

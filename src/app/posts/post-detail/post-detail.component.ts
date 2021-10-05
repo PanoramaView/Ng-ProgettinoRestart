@@ -5,7 +5,6 @@ import { PostService } from '../post.service';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Comment } from 'src/app/shared/tags.model';
 
 @Component({
   selector: 'app-post-detail',
@@ -14,7 +13,6 @@ import { Comment } from 'src/app/shared/tags.model';
 })
 export class PostDetailComponent implements OnInit, OnDestroy {
   post: Post;
-  comment: Comment;
   // posts: Post[];
   id: string;
   postsChangedSubscription: Subscription;
@@ -85,7 +83,8 @@ export class PostDetailComponent implements OnInit, OnDestroy {
 
   onSubmit(){
     this.post.comments.push(this.commentForm.value);
-
+    console.log("onsub");
+    console.log(this.post);
     this.dataStorageService.editPost(this.id, this.post);
     this.commentForm.reset();
   }
