@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
 import { PostDetailComponent } from './posts/post-detail/post-detail.component';
 import { PostEditComponent } from './posts/post-edit/post-edit.component';
 // import { PostsResolverService } from './posts/posts-resolver.service';
 import { PostsComponent } from './posts/posts.component';
-// import { AuthGuard } from './auth-guard.service';
+import { AuthGuard } from './shared/auth-guard.service';
+import { AuthService } from "./auth-service";
 // import { ErrorPageComponent } from './error-page/error-page.component';
 
 const appRoutes: Routes = [
@@ -12,7 +14,7 @@ const appRoutes: Routes = [
     { path: 'posts', component: PostsComponent, children:[
         { path: 'new', component: PostEditComponent },
         { path: ':id', component: PostDetailComponent},
-        { path: ':id/edit', component: PostEditComponent},
+        { path: ':id/edit', canActivate: [AuthGuard], component: PostEditComponent},
         // { path: ':id', component: PostDetailComponent, resolve:[ PostsResolverService] },
         // { path: ':id/edit', component: PostEditComponent, resolve:[ PostsResolverService] },
     ]},

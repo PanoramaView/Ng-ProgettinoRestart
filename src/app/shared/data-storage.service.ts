@@ -9,6 +9,7 @@ import { PostService } from '../posts/post.service';
 export class DataStorageService {
   errorMessage: string;
   totalAngularPackages: string;
+  canGoToRoute= true;
 
   constructor(private http: HttpClient, private postService: PostService) { }
 
@@ -20,6 +21,7 @@ export class DataStorageService {
       )
       .subscribe(resp => {
         console.log(resp);
+        this.fetchPosts();
       });
   }
 
@@ -59,7 +61,13 @@ export class DataStorageService {
         console.log("Fetched Data: ")
         console.log(resp.data);
         this.postService.setPosts(resp.data);
+
+        if(!resp){
+          this.canGoToRoute = false;
+          console.log("can't access");
+        }
       });
+
   }
 
   fetchPostDetail(id: string) {

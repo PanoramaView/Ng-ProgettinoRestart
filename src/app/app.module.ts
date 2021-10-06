@@ -17,6 +17,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { PostEditComponent } from './posts/post-edit/post-edit.component';
 import { PostService } from './posts/post.service';
 import { DataStorageService } from './shared/data-storage.service';
+import { AuthGuard } from './shared/auth-guard.service';
+import { AuthService } from './auth-service';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,7 @@ import { DataStorageService } from './shared/data-storage.service';
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [PostService, DataStorageService],
+  providers: [PostService, DataStorageService, AuthGuard, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
